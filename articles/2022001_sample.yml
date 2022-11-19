@@ -1,0 +1,21 @@
+creator: hoge
+createDate: 2022-11-07
+updateDate: !!timestamp 2022-11-07
+content:
+  mission: |
+    testtesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttestあああああ
+    testtesttesttesttesttesttesttesttesttesttesttesttesttesttest漢字だよ
+  processes:
+    - process: start
+      detail: |
+        testtesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttestあああああ
+        testtesttesttesttesttesttesttesttesttesttesttesttesttesttest漢字だよ
+    - process: design
+      detail: |
+        testtesttesttesttesttesttest
+        testtesttesttesttesttesttesttesttesttesttesttest
+        testtesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttest
+    - process: completed
+  tools:
+    - React
+    - Flask
