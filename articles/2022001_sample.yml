@@ -12,13 +12,13 @@ content:
         testtesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttestあああああ
         testtesttesttesttesttesttesttesttesttesttesttesttesttesttest漢字だよ
     - process: design
-      status: ongoing
+      status: completed
       detail: |
         testtesttesttesttesttesttest
         testtesttesttesttesttesttesttesttesttesttesttest
         testtesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttest
     - process: develop
-      status: untouched
+      status: ongoing
       detail: |
         test
     - process: release
