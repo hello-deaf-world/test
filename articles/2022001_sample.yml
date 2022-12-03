@@ -7,15 +7,24 @@ content:
     testtesttesttesttesttesttesttesttesttesttesttesttesttesttest漢字だよ
   processes:
     - process: start
+      status: completed
       detail: |
         testtesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttestあああああ
         testtesttesttesttesttesttesttesttesttesttesttesttesttesttest漢字だよ
     - process: design
+      status: completed
       detail: |
         testtesttesttesttesttesttest
         testtesttesttesttesttesttesttesttesttesttesttest
         testtesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttest
-    - process: completed
+    - process: develop
+      status: ongoing
+      detail: |
+        test
+    - process: release
+      status: untouched
+      detail: |
+        test
   tools:
     - React
     - Flask
