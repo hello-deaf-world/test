@@ -18,11 +18,11 @@ content:
         testtesttesttesttesttesttesttesttesttesttesttest
         testtesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttest
     - process: develop
-      status: ongoing
+      status: completed
       detail: |
         test
     - process: release
-      status: untouched
+      status: ongoing
       detail: |
         test
   tools:
