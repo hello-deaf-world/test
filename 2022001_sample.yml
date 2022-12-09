@@ -1,0 +1,33 @@
+creator: hoge
+createDate: 2022-11-07
+updateDate: !!timestamp 2022-11-07
+title: testtesttest漢字だよ
+description: testtesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttestあああああ
+    testtesttesttesttesttesttesttesttesttesttesttesttesttesttest漢字だよ
+content:
+  mission: |
+    testtesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttestあああああ
+    testtesttesttesttesttesttesttesttesttesttesttesttesttesttest漢字だよ
+  processes:
+    - process: start
+      status: completed
+      detail: |
+        testtesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttestあああああ
+        testtesttesttesttesttesttesttesttesttesttesttesttesttesttest漢字だよ
+    - process: design
+      status: completed
+      detail: |
+        testtesttesttesttesttesttest
+        testtesttesttesttesttesttesttesttesttesttesttest
+        testtesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttest
+    - process: develop
+      status: completed
+      detail: |
+        test
+    - process: release
+      status: ongoing
+      detail: |
+        test
+  tools:
+    - React
+    - Flask
