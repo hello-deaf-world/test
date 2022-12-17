@@ -34,5 +34,22 @@ content:
       detail: |
         test
   tools:
-    - React
-    - Flask
+    # - imageLinkの設定ルール
+    #   - 画像URL
+    #   - `ReactIcons/<アイコングループ>/<アイコン名>`: https://react-icons.github.io/react-icons
+    - name: Vite
+      imageLink: ReactIcons/SimpleIcons/Vite
+    - name: TypeScript
+      imageLink: ReactIcons/SimpleIcons/Typescript
+    - name: React
+      imageLink: ReactIcons/DevIcons/React
+    - name: React Router v6
+      imageLink: ReactIcons/SimpleIcons/Reactrouter
+    - name: Redux Toolkit
+      imageLink: ReactIcons/SimpleIcons/Redux
+    - name: Sass
+      imageLink: ReactIcons/DevIcons/Sass
+    - name: TailwindCSS
+      imageLink: ReactIcons/SimpleIcons/Tailwindcss
+    - name: Github API
+      imageLink: ReactIcons/DevIcons/GithubBadge
