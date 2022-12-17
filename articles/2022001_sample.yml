@@ -38,20 +38,20 @@ content:
     #   - 画像URL
     #   - `ReactIcons/<アイコングループ>/<アイコン名>`: https://react-icons.github.io/react-icons
     - name: Vite
-      imageLink: ReactIcons/SimpleIcons/Vite
+      imageLink: ReactIcons/SimpleIcons/SiVite
     - name: TypeScript
-      imageLink: ReactIcons/SimpleIcons/Typescript
+      imageLink: ReactIcons/SimpleIcons/SiTypescript
     - name: React
-      imageLink: ReactIcons/DevIcons/React
+      imageLink: ReactIcons/DevIcons/DiReact
     - name: React Router v6
-      imageLink: ReactIcons/SimpleIcons/Reactrouter
+      imageLink: ReactIcons/SimpleIcons/SiReactrouter
     - name: Redux Toolkit
-      imageLink: ReactIcons/SimpleIcons/Redux
+      imageLink: ReactIcons/SimpleIcons/SiRedux
     - name: Sass
-      imageLink: ReactIcons/DevIcons/Sass
+      imageLink: ReactIcons/DevIcons/DiSass
     - name: TailwindCSS
-      imageLink: ReactIcons/SimpleIcons/Tailwindcss
+      imageLink: ReactIcons/SimpleIcons/SiTailwindcss
     - name: Github API
-      imageLink: ReactIcons/DevIcons/GithubBadge
+      imageLink: ReactIcons/DevIcons/DiGithubBadge
     - name: KagenoMoheji
       imageLink: https://avatars.githubusercontent.com/u/37401955?v=4
