@@ -55,3 +55,5 @@ content:
       imageLink: ReactIcons/DevIcons/DiGithubBadge
     - name: KagenoMoheji
       imageLink: https://avatars.githubusercontent.com/u/37401955?v=4
+    - name: IconLoadError
+      imageLink: ReactIcons/DevIcons/GithubBadge
