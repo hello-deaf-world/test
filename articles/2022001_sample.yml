@@ -51,6 +51,8 @@ content:
       imageLink: ReactIcons/DevIcons/DiSass
     - name: TailwindCSS
       imageLink: ReactIcons/SimpleIcons/SiTailwindcss
+    - name: styled-components
+      imageLink: ReactIcons/DevIcons/DiStyledcomponents
     - name: Github API
       imageLink: ReactIcons/DevIcons/DiGithubBadge
     - name: KagenoMoheji
