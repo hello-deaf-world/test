@@ -32,5 +32,7 @@ content:
       detail: |
         test
   tools:
-    - React
-    - Flask
+    - name: Vite
+      imageLink: ReactIcons/SimpleIcons/SiVite
+    - name: TypeScript
+      imageLink: ReactIcons/SimpleIcons/SiTypescript
