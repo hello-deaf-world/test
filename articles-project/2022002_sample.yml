@@ -5,7 +5,6 @@ content:
   title: testtesttest漢字だよ
   description: testtesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttestあああああ
     testtesttesttesttesttesttesttesttesttesttesttesttesttesttest漢字だよ
-  githubRepoLink: https://github.com/hello-deaf-world/test
   missions:
     - process: ミッションその1
       status: untouched
