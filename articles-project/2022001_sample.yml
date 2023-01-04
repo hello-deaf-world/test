@@ -7,6 +7,7 @@ content:
   imageLinks:
     - https://avatars.githubusercontent.com/u/37401955?v=4
     - https://avatars.githubusercontent.com/u/86644372?v=4
+  githubRepoLink: https://github.com/hello-deaf-world/test
   missions:
     - process: ミッションその1
       status: untouched
