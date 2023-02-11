@@ -77,10 +77,10 @@ jobs:
       #     git checkout -b ${branch_name}
       - name: download and output zenn articles into a json
         run: |
-          # > ???/github_actions/zenn_articles/download.json
-          echo ${GITHUB_WORKSPACE}
-          curl ${API_ZENN_ARTICLES}
-          pwd
+          # pwd
+          # echo ${GITHUB_WORKSPACE}
+          # ls -la
+          curl ${API_ZENN_ARTICLES} > ${GITHUB_WORKSPACE}/github_actions/zenn_articles/download.json
           ls -la .
       # - name: create pull request
       #   # https://github.com/marketplace/actions/create-pull-request
