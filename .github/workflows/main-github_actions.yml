@@ -80,6 +80,7 @@ jobs:
           # pwd
           # echo ${GITHUB_WORKSPACE}
           # ls -la
+          touch ${GITHUB_WORKSPACE}/github_actions/zenn_articles/download.json
           curl ${API_ZENN_ARTICLES} > ${GITHUB_WORKSPACE}/github_actions/zenn_articles/download.json
           ls -la .
           cat ${GITHUB_WORKSPACE}/github_actions/zenn_articles/download.json
