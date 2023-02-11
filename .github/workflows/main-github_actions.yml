@@ -33,7 +33,7 @@ on:
       logLevel:
         description: 'Log level'
         required: true
-        default: 'warning'
+        default: 'debug'
         type: choice
         options:
         - info
