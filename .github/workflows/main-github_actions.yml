@@ -66,26 +66,29 @@ jobs:
         uses: actions/checkout@v3
         with:
           ref: main-github_actions
-      # - name: create new branch
-      #   env:
-      #     TZ: 'Asia/Tokyo'
-      #     GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
-      #   run: |
-      #     job_time=$(date '+%Y%m%d%H%M')
-      #     branch_name=github_actions/zenn_articles-${job_time}
-      #     echo "BRANCH_NAME=${branch_name}" >> $GITHUB_ENV
-      #     # 前のstepで新しいブランチの作成元にcheckoutしてある前提
-      #     git checkout -b ${branch_name}
+      - name: create new branch
+        env:
+          TZ: 'Asia/Tokyo'
+        run: |
+          job_time=$(date '+%Y%m%d%H%M')
+          branch_name=github_actions/zenn_articles-${job_time}
+          echo "BRANCH_NAME=${branch_name}" >> $GITHUB_ENV
+          # 前のstepで新しいブランチの作成元にcheckoutしてある前提
+          git branch
+          git checkout -b ${branch_name}
       - name: download and output zenn articles into a json
         run: |
           git branch
+          # 前のstepで宣言した変数`BRANCH_NAME`を呼び出せるか
+          echo ${BRANCH_NAME}
           # pwd
           # echo ${GITHUB_WORKSPACE}
           # ls -la
           mkdir -p ${GITHUB_WORKSPACE}/github_actions/zenn_articles
-          curl ${API_ZENN_ARTICLES} > ${GITHUB_WORKSPACE}/github_actions/zenn_articles/download.json
+          # TODO: 以下本番ではコメントアウトを外す
+          # curl ${API_ZENN_ARTICLES} > ${GITHUB_WORKSPACE}/github_actions/zenn_articles/download.json
           # ls -la ${GITHUB_WORKSPACE}/github_actions/zenn_articles
-          cat ${GITHUB_WORKSPACE}/github_actions/zenn_articles/download.json
+          # cat ${GITHUB_WORKSPACE}/github_actions/zenn_articles/download.json
       # - name: create pull request
       #   # https://github.com/marketplace/actions/create-pull-request
       #   uses: peter-evans/create-pull-request@v4
