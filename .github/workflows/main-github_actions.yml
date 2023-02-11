@@ -61,6 +61,7 @@ jobs:
       API_ZENN_SCRAPS: https://zenn.dev/api/scraps?username=hellodeafworld
     steps:
       - name: checkout main-github_actions
+        # まず，GithubActions用のファイル管理ブランチが存在している前提を確保する
         # https://github.com/marketplace/actions/checkout
         uses: actions/checkout@v3
         with:
@@ -77,13 +78,13 @@ jobs:
       #     git checkout -b ${branch_name}
       - name: download and output zenn articles into a json
         run: |
+          git branch
           # pwd
-          echo ${GITHUB_WORKSPACE}
-          ls -la
+          # echo ${GITHUB_WORKSPACE}
+          # ls -la
           mkdir -p ${GITHUB_WORKSPACE}/github_actions/zenn_articles
-          # touch ${GITHUB_WORKSPACE}/github_actions/zenn_articles/download.json
           curl ${API_ZENN_ARTICLES} > ${GITHUB_WORKSPACE}/github_actions/zenn_articles/download.json
-          ls -la .
+          # ls -la ${GITHUB_WORKSPACE}/github_actions/zenn_articles
           cat ${GITHUB_WORKSPACE}/github_actions/zenn_articles/download.json
       # - name: create pull request
       #   # https://github.com/marketplace/actions/create-pull-request
