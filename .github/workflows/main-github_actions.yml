@@ -82,6 +82,7 @@ jobs:
           # ls -la
           curl ${API_ZENN_ARTICLES} > ${GITHUB_WORKSPACE}/github_actions/zenn_articles/download.json
           ls -la .
+          cat ${GITHUB_WORKSPACE}/github_actions/zenn_articles/download.json
       # - name: create pull request
       #   # https://github.com/marketplace/actions/create-pull-request
       #   uses: peter-evans/create-pull-request@v4
