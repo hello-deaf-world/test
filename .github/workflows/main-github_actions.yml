@@ -78,9 +78,10 @@ jobs:
       - name: download and output zenn articles into a json
         run: |
           # pwd
-          # echo ${GITHUB_WORKSPACE}
-          # ls -la
-          echo "" > ${GITHUB_WORKSPACE}/github_actions/zenn_articles/download.json
+          echo ${GITHUB_WORKSPACE}
+          ls -la
+          mkdir -p ${GITHUB_WORKSPACE}/github_actions/zenn_articles
+          # touch ${GITHUB_WORKSPACE}/github_actions/zenn_articles/download.json
           curl ${API_ZENN_ARTICLES} > ${GITHUB_WORKSPACE}/github_actions/zenn_articles/download.json
           ls -la .
           cat ${GITHUB_WORKSPACE}/github_actions/zenn_articles/download.json
