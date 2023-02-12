@@ -81,10 +81,16 @@ jobs:
           # echo ${GITHUB_WORKSPACE}
           # ls -la
           mkdir -p ${GITHUB_WORKSPACE}/github_actions/zenn_articles
-          # TODO: 以下本番ではコメントアウトを外す
           curl ${API_ZENN_ARTICLES} > ${GITHUB_WORKSPACE}/github_actions/zenn_articles/download.json
           ls -la ${GITHUB_WORKSPACE}/github_actions/zenn_articles
-          cat ${GITHUB_WORKSPACE}/github_actions/zenn_articles/download.json
+          # cat ${GITHUB_WORKSPACE}/github_actions/zenn_articles/download.json
+          curl ${API_ZENN_BOOKS} > ${GITHUB_WORKSPACE}/github_actions/zenn_books/download.json
+          ls -la ${GITHUB_WORKSPACE}/github_actions/zenn_books
+          # cat ${GITHUB_WORKSPACE}/github_actions/zenn_books/download.json
+          curl ${API_ZENN_SCRAPS} > ${GITHUB_WORKSPACE}/github_actions/zenn_scraps/download.json
+          ls -la ${GITHUB_WORKSPACE}/github_actions/zenn_scraps
+          # cat ${GITHUB_WORKSPACE}/github_actions/zenn_scraps/download.json
+      # 以下，自動でプルリク＆マージする実装めんどくさかったので，応急処置としてチェックアウト前のブランチにマージ＆pushするワークフローにしてしまう．
       - name: git settings
         run: |
           git config --local user.email "github-actions[bot]@users.noreply.github.com"
@@ -97,28 +103,13 @@ jobs:
           echo "WorkBranch: ${BRANCH_NAME}"
           echo "Commit all change in branch '${BRANCH_NAME}'"
           git add .
-          git commit -m "Download and output zenn articles json"
+          git commit -m "Download and output zenn articles/books/scraps to json"
           echo "Merge branch '${BRANCH_NAME}' to branch 'main-github_actions'"
           git checkout main-github_actions
           git branch
           git fetch
           git merge origin/main-github_actions
           git merge ${BRANCH_NAME}
-      # - name: push new 'main-github_actions'
-      #   run: |
-      #     git push origin main-github_actions
-      # 自動でプルリク＆マージする実装めんどくさかったので，応急処置としてチェックアウト前のブランチにマージ＆pushするワークフローにしてしまう．
-      # - name: create new pull request
-      #   # https://github.com/marketplace/actions/create-pull-request
-      #   # https://www.memory-lovers.blog/entry/2022/11/18/083000
-      #   # https://www.ritolab.com/posts/206#%E3%83%97%E3%83%AB%E3%83%AA%E3%82%AF%E3%82%92%E4%BD%9C%E6%88%90%E3%81%99%E3%82%8B
-      #   env:
-      #     GH_TOKEN: ${secrets.GITHUB_TOKEN}
-      #   uses: peter-evans/create-pull-request@v4
-      #   with:
-      #     token: ${{GH_TOKEN}}
-      #     title: Merge new zenn articles json
-      #     commit-message: Merge new zenn articles json
-      #     branch: ${{BRANCH_NAME}}
-      #     base: main-github_actions
-      # # - name: merge new pull request
+      - name: push new 'main-github_actions'
+        run: |
+          git push origin main-github_actions
