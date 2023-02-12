@@ -56,7 +56,7 @@ jobs:
     runs-on: ubuntu-latest
     env:
       # 一定の記事数を超えると全件取得できなくなってくるかも．count/pageといったパラメータを意識する必要が出てくる．
-      API_ZENN_ARTICLES: https://zenn.dev/api/articles?username=hellodeafworld
+      API_ZENN_ARTICLES: https://zenn.dev/api/articles?username=yend724
       API_ZENN_BOOKS: https://zenn.dev/api/books?username=hellodeafworld
       API_ZENN_SCRAPS: https://zenn.dev/api/scraps?username=hellodeafworld
     steps:
