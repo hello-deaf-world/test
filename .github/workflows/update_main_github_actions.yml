@@ -1,0 +1,114 @@
+# mainブランチへのマージをトリガーとして，下記のファイル更新をした後にmain-github_actionsへのダイレクトなpushを試みる．
+# - プロジェクト記事の各yamlからタグ情報等を一元化させたjsonファイルの上書き生成
+# - Zenn APIを用いたarticles/books/scrapsのそれぞれのjsonファイルの上書き生成
+#   - Zenn APIがWebアプリからのリクエストを拒否しており，curlでのリクエストでしか取得できないから．
+
+name: update_main_github_actions
+on:
+  # mainブランチへのプルリクマージをトリガーにする
+  # https://docs.github.com/ja/actions/using-workflows/events-that-trigger-workflows#running-your-workflow-when-a-pull-request-merges
+  pull_request:
+    branches:
+      - main
+    types:
+      - closed
+  workflow_dispatch:
+    # https://docs.github.com/ja/actions/using-workflows/events-that-trigger-workflows#workflow_dispatch
+    inputs:
+      # logLevel:
+      #   description: 'Log level'
+      #   required: true
+      #   default: 'debug'
+      #   type: choice
+      #   options:
+      #     - info
+      #     - warning
+      #     - debug
+      will_push:
+        description: 'Will this manual execution push branch?'
+        required: true
+        type: boolean
+        default: false
+jobs:
+  update_main_github_actions:
+    if:
+      # https://docs.github.com/ja/actions/learn-github-actions/expressions
+      (github.event_name == 'workflow_dispatch') ||
+      ((github.event_name != 'workflow_dispatch') && (github.event.pull_request.merged == true))
+    runs-on: ubuntu-latest
+    env:
+      # 一定の記事数を超えると全件取得できなくなってくるかも．count/pageといったパラメータを意識する必要が出てくる．
+      API_ZENN_ARTICLES: https://zenn.dev/api/articles?username=hellodeafworld
+      API_ZENN_BOOKS: https://zenn.dev/api/books?username=hellodeafworld
+      API_ZENN_SCRAPS: https://zenn.dev/api/scraps?username=hellodeafworld
+    steps:
+      - name: checkout main-github_actions
+        # まず，GithubActions用のファイル管理ブランチが存在している前提を確保する
+        # https://github.com/marketplace/actions/checkout
+        uses: actions/checkout@v3
+        with:
+          ref: main-github_actions
+      - name: create new branch
+        env:
+          TZ: 'Asia/Tokyo'
+        run: |
+          job_time=$(date '+%Y%m%d%H%M')
+          branch_name=github_actions/update-${job_time}
+          # 後続のstepでもブランチ名を共有できるようにする
+          echo "BRANCH_NAME=${branch_name}" >> $GITHUB_ENV
+          # 前のstepで新しいブランチの作成元にcheckoutしてある前提
+          echo "Check out branch '${branch_name}' from $(git branch)"
+          git checkout -b "${branch_name}"
+      - name: output table of project articles to json
+        run: |
+          node --version
+          npm --version
+          node ${GITHUB_WORKSPACE}/github_actions/tbl_articles_project/workspace/tbl_articles_project/dist/main.js -- "https://api.github.com/repos/hello-deaf-world/test/contents/articles_project" "${GITHUB_WORKSPACE}/github_actions/deliverable/tbl_articles_project/table.json"
+      - name: download and output zenn articles/books/scraps into a json
+        run: |
+          git branch
+          # 「現在のブランチが一致しているか」・「前のstepで宣言した変数`BRANCH_NAME`を呼び出せるか」の確認も兼ねる
+          echo "WorkBranch: ${BRANCH_NAME}"
+          # pwd
+          # echo ${GITHUB_WORKSPACE}
+          # ls -la
+          mkdir -p ${GITHUB_WORKSPACE}/github_actions/deliverable/zenn_articles
+          curl ${API_ZENN_ARTICLES} > ${GITHUB_WORKSPACE}/github_actions/deliverable/zenn_articles/download.json
+          ls -la ${GITHUB_WORKSPACE}/github_actions/deliverable/zenn_articles
+          # cat ${GITHUB_WORKSPACE}/github_actions/deliverable/zenn_articles/download.json
+          mkdir -p ${GITHUB_WORKSPACE}/github_actions/deliverable/zenn_books
+          curl ${API_ZENN_BOOKS} > ${GITHUB_WORKSPACE}/github_actions/deliverable/zenn_books/download.json
+          ls -la ${GITHUB_WORKSPACE}/github_actions/deliverable/zenn_books
+          # cat ${GITHUB_WORKSPACE}/github_actions/deliverable/zenn_books/download.json
+          mkdir -p ${GITHUB_WORKSPACE}/github_actions/deliverable/zenn_scraps
+          curl ${API_ZENN_SCRAPS} > ${GITHUB_WORKSPACE}/github_actions/deliverable/zenn_scraps/download.json
+          ls -la ${GITHUB_WORKSPACE}/github_actions/deliverable/zenn_scraps
+          # cat ${GITHUB_WORKSPACE}/github_actions/deliverable/zenn_scraps/download.json
+      # 以下，自動でプルリク＆マージするワークフローの実装がめんどくさかったので，応急処置としてチェックアウト前のブランチにマージ＆pushするワークフローにしてしまう．
+      # https://www.pnkts.net/2020/07/25/github_actions-git-commit-push
+      - name: git settings
+        run: |
+          git config --local user.email "github-actions[bot]@users.noreply.github.com"
+          git config --local user.name "github-actions[bot]"
+      - name: merge new branch to branch 'main-github_actions'
+        # 最新化したmain-github_actionsブランチにマージしてpushするところの，マージまで．
+        # TODO: コンフリクトがあればここで止まってpushされないはず…．
+        # WARNING: Zennのjsonの中身がmain-github_actionsブランチの時から変更無い時は，ここの「コミットする差分がない」失敗で止まる．
+        if: inputs.will_push
+        run: |
+          git branch
+          # 「現在のブランチが一致しているか」・「前のstepで宣言した変数`BRANCH_NAME`を呼び出せるか」の確認も兼ねる
+          echo "WorkBranch: ${BRANCH_NAME}"
+          echo "Commit all change in branch '${BRANCH_NAME}'"
+          git add .
+          git commit -m "Download and output zenn articles/books/scraps to json"
+          echo "Merge branch '${BRANCH_NAME}' to branch 'main-github_actions'"
+          git checkout main-github_actions
+          git branch
+          git fetch
+          git merge origin/main-github_actions
+          git merge ${BRANCH_NAME}
+      - name: push new 'main-github_actions'
+        if: inputs.will_push
+        run: |
+          git push origin main-github_actions
