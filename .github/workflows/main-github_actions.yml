@@ -20,8 +20,7 @@
 name: download_zenn_posts
 on:
   # mainブランチへのプルリクマージをトリガーにする
-  # - Refs
-  #   - https://docs.github.com/ja/actions/using-workflows/events-that-trigger-workflows#running-your-workflow-when-a-pull-request-merges
+  # https://docs.github.com/ja/actions/using-workflows/events-that-trigger-workflows#running-your-workflow-when-a-pull-request-merges
   pull_request:
     branches:
       - main
@@ -39,14 +38,10 @@ on:
         - info
         - warning
         - debug
-      tags:
-        description: 'Test scenario tags'
-        required: false
-        type: boolean
-      # environment:
-      #   description: 'Environment to run tests against'
-      #   type: environment
-      #   required: true
+      # tags:
+      #   description: 'Test scenario tags'
+      #   required: false
+      #   type: boolean
 jobs:
   download_zenn_posts:
     if:
@@ -72,29 +67,58 @@ jobs:
         run: |
           job_time=$(date '+%Y%m%d%H%M')
           branch_name=github_actions/zenn_articles-${job_time}
+          # 後続のstepでもブランチ名を共有できるようにする
           echo "BRANCH_NAME=${branch_name}" >> $GITHUB_ENV
           # 前のstepで新しいブランチの作成元にcheckoutしてある前提
-          git branch
-          git checkout -b ${branch_name}
+          echo "Check out branch '${branch_name}' from $(git branch)"
+          git checkout -b "${branch_name}"
       - name: download and output zenn articles into a json
         run: |
           git branch
-          # 前のstepで宣言した変数`BRANCH_NAME`を呼び出せるか
-          echo ${BRANCH_NAME}
+          # 「現在のブランチが一致しているか」・「前のstepで宣言した変数`BRANCH_NAME`を呼び出せるか」の確認も兼ねる
+          echo "WorkBranch: ${BRANCH_NAME}"
           # pwd
           # echo ${GITHUB_WORKSPACE}
           # ls -la
           mkdir -p ${GITHUB_WORKSPACE}/github_actions/zenn_articles
           # TODO: 以下本番ではコメントアウトを外す
-          # curl ${API_ZENN_ARTICLES} > ${GITHUB_WORKSPACE}/github_actions/zenn_articles/download.json
-          # ls -la ${GITHUB_WORKSPACE}/github_actions/zenn_articles
-          # cat ${GITHUB_WORKSPACE}/github_actions/zenn_articles/download.json
-      # - name: create pull request
+          curl ${API_ZENN_ARTICLES} > ${GITHUB_WORKSPACE}/github_actions/zenn_articles/download.json
+          ls -la ${GITHUB_WORKSPACE}/github_actions/zenn_articles
+          cat ${GITHUB_WORKSPACE}/github_actions/zenn_articles/download.json
+      - name: git settings
+        run: |
+          git config --local user.email "github-actions[bot]@users.noreply.github.com"
+          git config --local user.name "github-actions[bot]"
+      - name: merge new branch to branch 'main-github_actions'
+        # 念のため新しく作ったブランチのバックアップとしてpushしておく
+        run: |
+          git branch
+          # 「現在のブランチが一致しているか」・「前のstepで宣言した変数`BRANCH_NAME`を呼び出せるか」の確認も兼ねる
+          echo "WorkBranch: ${BRANCH_NAME}"
+          echo "Commit all change in branch '${BRANCH_NAME}'"
+          git add .
+          git commit -m "Download and output zenn articles json"
+          echo "Merge branch '${BRANCH_NAME}' to branch 'main-github_actions'"
+          git checkout main-github_actions
+          git branch
+          git fetch
+          git merge origin/main-github_actions
+          git merge ${BRANCH_NAME}
+      # - name: push new 'main-github_actions'
+      #   run: |
+      #     git push origin main-github_actions
+      # 自動でプルリク＆マージする実装めんどくさかったので，応急処置としてチェックアウト前のブランチにマージ＆pushするワークフローにしてしまう．
+      # - name: create new pull request
       #   # https://github.com/marketplace/actions/create-pull-request
+      #   # https://www.memory-lovers.blog/entry/2022/11/18/083000
+      #   # https://www.ritolab.com/posts/206#%E3%83%97%E3%83%AB%E3%83%AA%E3%82%AF%E3%82%92%E4%BD%9C%E6%88%90%E3%81%99%E3%82%8B
+      #   env:
+      #     GH_TOKEN: ${secrets.GITHUB_TOKEN}
       #   uses: peter-evans/create-pull-request@v4
       #   with:
-      #     token: ${{secrets.GITHUB_TOKEN}}
+      #     token: ${{GH_TOKEN}}
       #     title: Merge new zenn articles json
       #     commit-message: Merge new zenn articles json
-      #     branch: $branch_name ???
+      #     branch: ${{BRANCH_NAME}}
       #     base: main-github_actions
+      # # - name: merge new pull request
