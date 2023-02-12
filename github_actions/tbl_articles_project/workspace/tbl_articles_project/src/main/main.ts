@@ -111,11 +111,7 @@ Promise.all([getContents(articlesGHUrl)])
 
         const outputDir = outputFname.split("/").slice(0, -1).join("/");
         if (!fs.existsSync(outputDir)) {
-          fs.mkdir(outputDir, err => {
-            if (err != null) {
-              throw err;
-            }
-          });
+          fs.mkdirSync(outputDir, {recursive: true});
         }
         fs.writeFileSync(outputFname, JSON.stringify(tblArticles, null, 2));
       })
