@@ -35,13 +35,18 @@ on:
         default: 'debug'
         type: choice
         options:
-        - info
-        - warning
-        - debug
+          - info
+          - warning
+          - debug
       # tags:
       #   description: 'Test scenario tags'
       #   required: false
       #   type: boolean
+      will_push:
+        description: 'Will this manual execution push branch?'
+        required: true
+        type: boolean
+        default: false
 jobs:
   download_zenn_posts:
     if:
@@ -92,7 +97,7 @@ jobs:
           curl ${API_ZENN_SCRAPS} > ${GITHUB_WORKSPACE}/github_actions/zenn_scraps/download.json
           ls -la ${GITHUB_WORKSPACE}/github_actions/zenn_scraps
           # cat ${GITHUB_WORKSPACE}/github_actions/zenn_scraps/download.json
-      # 以下，自動でプルリク＆マージする実装めんどくさかったので，応急処置としてチェックアウト前のブランチにマージ＆pushするワークフローにしてしまう．
+      # 以下，自動でプルリク＆マージするワークフローの実装がめんどくさかったので，応急処置としてチェックアウト前のブランチにマージ＆pushするワークフローにしてしまう．
       - name: git settings
         run: |
           git config --local user.email "github-actions[bot]@users.noreply.github.com"
@@ -106,6 +111,8 @@ jobs:
           echo "Commit all change in branch '${BRANCH_NAME}'"
           git add .
           git commit -m "Download and output zenn articles/books/scraps to json"
+          # 最新化したmain-github_actionsブランチにマージしてpushする．
+          # TODO: コンフリクトがあればここで止まってpushされないはず…．
           echo "Merge branch '${BRANCH_NAME}' to branch 'main-github_actions'"
           git checkout main-github_actions
           git branch
@@ -113,5 +120,6 @@ jobs:
           git merge origin/main-github_actions
           git merge ${BRANCH_NAME}
       - name: push new 'main-github_actions'
+        if: inputs.will_push
         run: |
           git push origin main-github_actions
