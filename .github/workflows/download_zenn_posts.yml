@@ -45,8 +45,8 @@ jobs:
           ref: main-github_actions
       - name: try nodejs
         run: |
-          node -V
-          npm -V
+          node --version
+          npm --version
       - name: create new branch
         env:
           TZ: 'Asia/Tokyo'
