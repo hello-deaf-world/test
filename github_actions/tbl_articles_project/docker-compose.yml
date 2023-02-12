@@ -1,0 +1,18 @@
+version: "3"
+
+services:
+  tbl_articles_project:
+    build:
+      context: .
+      dockerfile: ./docker/dev/Dockerfile
+      args:
+        APPNAME: ${APPNAME}
+        SHARED_WORKSPACE_HOST: ${SHARED_WORKSPACE_HOST}
+        SHARED_WORKSPACE_CONTAINER: ${SHARED_WORKSPACE_CONTAINER}
+        DOCKER_TOOLS_HOST: ${DOCKER_TOOLS_HOST}
+        NODE_VERSION: ${NODE_VERSION}
+    image: ${APPNAME}
+    container_name: ${APPNAME}
+    volumes:
+      - ./${SHARED_WORKSPACE_HOST}:${SHARED_WORKSPACE_CONTAINER}
+    tty: true
