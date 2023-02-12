@@ -10,19 +10,15 @@ on:
   workflow_dispatch:
     # https://docs.github.com/ja/actions/using-workflows/events-that-trigger-workflows#workflow_dispatch
     inputs:
-      logLevel:
-        description: 'Log level'
-        required: true
-        default: 'debug'
-        type: choice
-        options:
-          - info
-          - warning
-          - debug
-      # tags:
-      #   description: 'Test scenario tags'
-      #   required: false
-      #   type: boolean
+      # logLevel:
+      #   description: 'Log level'
+      #   required: true
+      #   default: 'debug'
+      #   type: choice
+      #   options:
+      #     - info
+      #     - warning
+      #     - debug
       will_push:
         description: 'Will this manual execution push branch?'
         required: true
@@ -58,7 +54,7 @@ jobs:
           # 前のstepで新しいブランチの作成元にcheckoutしてある前提
           echo "Check out branch '${branch_name}' from $(git branch)"
           git checkout -b "${branch_name}"
-      - name: download and output zenn articles into a json
+      - name: download and output zenn articles/books/scraps into a json
         run: |
           git branch
           # 「現在のブランチが一致しているか」・「前のstepで宣言した変数`BRANCH_NAME`を呼び出せるか」の確認も兼ねる
