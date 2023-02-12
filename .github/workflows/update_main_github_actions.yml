@@ -94,7 +94,9 @@ jobs:
         # 最新化したmain-github_actionsブランチにマージしてpushするところの，マージまで．
         # TODO: コンフリクトがあればここで止まってpushされないはず…．
         # WARNING: Zennのjsonの中身がmain-github_actionsブランチの時から変更無い時は，ここの「コミットする差分がない」失敗で止まる．
-        if: inputs.will_push
+        if: 
+          (github.event_name == 'workflow_dispatch' && inputs.will_push) ||
+          (github.event_name != 'workflow_dispatch')
         run: |
           git branch
           # 「現在のブランチが一致しているか」・「前のstepで宣言した変数`BRANCH_NAME`を呼び出せるか」の確認も兼ねる
@@ -109,6 +111,8 @@ jobs:
           git merge origin/main-github_actions
           git merge ${BRANCH_NAME}
       - name: push new 'main-github_actions'
-        if: inputs.will_push
+        if: 
+          (github.event_name == 'workflow_dispatch' && inputs.will_push) ||
+          (github.event_name != 'workflow_dispatch')
         run: |
           git push origin main-github_actions
