@@ -103,7 +103,9 @@ jobs:
           git config --local user.email "github-actions[bot]@users.noreply.github.com"
           git config --local user.name "github-actions[bot]"
       - name: merge new branch to branch 'main-github_actions'
-        # 念のため新しく作ったブランチのバックアップとしてpushしておく
+        # 最新化したmain-github_actionsブランチにマージしてpushするところの，マージまで．
+        # TODO: コンフリクトがあればここで止まってpushされないはず…．
+        if: inputs.will_push
         run: |
           git branch
           # 「現在のブランチが一致しているか」・「前のstepで宣言した変数`BRANCH_NAME`を呼び出せるか」の確認も兼ねる
@@ -111,8 +113,6 @@ jobs:
           echo "Commit all change in branch '${BRANCH_NAME}'"
           git add .
           git commit -m "Download and output zenn articles/books/scraps to json"
-          # 最新化したmain-github_actionsブランチにマージしてpushする．
-          # TODO: コンフリクトがあればここで止まってpushされないはず…．
           echo "Merge branch '${BRANCH_NAME}' to branch 'main-github_actions'"
           git checkout main-github_actions
           git branch
