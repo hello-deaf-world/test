@@ -87,7 +87,7 @@ jobs:
       - name: merge new branch to branch 'main-github_actions'
         # 最新化したmain-github_actionsブランチにマージしてpushするところの，マージまで．
         # TODO: コンフリクトがあればここで止まってpushされないはず…．
-        # WARNING: Zennのjsonの中身がmain-github_actionsブランチの時から変更無い時は，ここのコミット失敗で止まる．
+        # WARNING: Zennのjsonの中身がmain-github_actionsブランチの時から変更無い時は，ここの「コミットする差分がない」失敗で止まる．
         if: inputs.will_push
         run: |
           git branch
