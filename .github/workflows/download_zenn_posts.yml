@@ -33,7 +33,7 @@ jobs:
     if:
       # https://docs.github.com/ja/actions/learn-github-actions/expressions
       (github.event_name == 'workflow_dispatch') ||
-      ((github.event_name == 'workflow_dispatch') && (github.event.pull_request.merged == true))
+      ((github.event_name != 'workflow_dispatch') && (github.event.pull_request.merged == true))
     runs-on: ubuntu-latest
     env:
       # 一定の記事数を超えると全件取得できなくなってくるかも．count/pageといったパラメータを意識する必要が出てくる．
