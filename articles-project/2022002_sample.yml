@@ -36,3 +36,6 @@ content:
       imageLink: ReactIcons/SimpleIcons/SiVite
     - name: TypeScript
       imageLink: ReactIcons/SimpleIcons/SiTypescript
+  tags:
+    - Sample
+    - Python
