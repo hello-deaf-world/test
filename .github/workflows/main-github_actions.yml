@@ -1,22 +1,3 @@
-# -Refs
-#   - github actionsの基礎
-#     - https://blog1.mammb.com/entry/2021/12/11/090000
-#   - 変数関連
-#     - https://dev.classmethod.jp/articles/replace-deprecated-method-on-actions/
-#   - 実行ユーザ関連
-#     - https://qiita.com/thaim/items/3d1a4d09ec4a7d8844ce
-#     - https://zenn.dev/tatsuo48/articles/72c8939bbc6329
-#     - https://rcmdnk.com/blog/2022/09/29/computer-github/
-#   - 新しいブランチを切ってプルリクする関連
-#     - https://www.ritolab.com/posts/206
-#     - https://www.memory-lovers.blog/entry/2022/11/18/083000
-#     - https://michaelcurrin.github.io/code-cookbook/recipes/ci-cd/github-actions/workflows/create-pull-request.html
-#   - プルリクマージ関連
-#     - https://zenn.dev/tatsurom/articles/actions-auto-merge
-#   - ファイル作成～プルリクまで
-#     - https://dev.classmethod.jp/articles/creating-a-file-branch-pull-request-from-github-actions-by-issue-event/
-
-
 name: download_zenn_posts
 on:
   # mainブランチへのプルリクマージをトリガーにする
@@ -56,7 +37,7 @@ jobs:
     runs-on: ubuntu-latest
     env:
       # 一定の記事数を超えると全件取得できなくなってくるかも．count/pageといったパラメータを意識する必要が出てくる．
-      API_ZENN_ARTICLES: https://zenn.dev/api/articles?username=yend724
+      API_ZENN_ARTICLES: https://zenn.dev/api/articles?username=hellodeafworld
       API_ZENN_BOOKS: https://zenn.dev/api/books?username=hellodeafworld
       API_ZENN_SCRAPS: https://zenn.dev/api/scraps?username=hellodeafworld
     steps:
@@ -88,7 +69,7 @@ jobs:
           mkdir -p ${GITHUB_WORKSPACE}/github_actions/zenn_articles
           curl ${API_ZENN_ARTICLES} > ${GITHUB_WORKSPACE}/github_actions/zenn_articles/download.json
           ls -la ${GITHUB_WORKSPACE}/github_actions/zenn_articles
-          cat ${GITHUB_WORKSPACE}/github_actions/zenn_articles/download.json
+          # cat ${GITHUB_WORKSPACE}/github_actions/zenn_articles/download.json
           mkdir -p ${GITHUB_WORKSPACE}/github_actions/zenn_books
           curl ${API_ZENN_BOOKS} > ${GITHUB_WORKSPACE}/github_actions/zenn_books/download.json
           ls -la ${GITHUB_WORKSPACE}/github_actions/zenn_books
@@ -98,6 +79,7 @@ jobs:
           ls -la ${GITHUB_WORKSPACE}/github_actions/zenn_scraps
           # cat ${GITHUB_WORKSPACE}/github_actions/zenn_scraps/download.json
       # 以下，自動でプルリク＆マージするワークフローの実装がめんどくさかったので，応急処置としてチェックアウト前のブランチにマージ＆pushするワークフローにしてしまう．
+      # https://www.pnkts.net/2020/07/25/github_actions-git-commit-push
       - name: git settings
         run: |
           git config --local user.email "github-actions[bot]@users.noreply.github.com"
