@@ -84,9 +84,11 @@ jobs:
           curl ${API_ZENN_ARTICLES} > ${GITHUB_WORKSPACE}/github_actions/zenn_articles/download.json
           ls -la ${GITHUB_WORKSPACE}/github_actions/zenn_articles
           # cat ${GITHUB_WORKSPACE}/github_actions/zenn_articles/download.json
+          mkdir -p ${GITHUB_WORKSPACE}/github_actions/zenn_books
           curl ${API_ZENN_BOOKS} > ${GITHUB_WORKSPACE}/github_actions/zenn_books/download.json
           ls -la ${GITHUB_WORKSPACE}/github_actions/zenn_books
           # cat ${GITHUB_WORKSPACE}/github_actions/zenn_books/download.json
+          mkdir -p ${GITHUB_WORKSPACE}/github_actions/zenn_scraps
           curl ${API_ZENN_SCRAPS} > ${GITHUB_WORKSPACE}/github_actions/zenn_scraps/download.json
           ls -la ${GITHUB_WORKSPACE}/github_actions/zenn_scraps
           # cat ${GITHUB_WORKSPACE}/github_actions/zenn_scraps/download.json
