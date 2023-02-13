@@ -24,7 +24,7 @@ import {type ProjectType} from "~/types";
 
 const articlesGHUrl: string = process.argv[3];
 if (articlesGHUrl == null || articlesGHUrl.length === 0) {
-  throw Error("The first command line argument 'articlesGHUrl'(='https://api.github.com/repos/<USERNAME>/<REPOSITORY_NAME>/contents/<REPOSITORY_PATH>') is required.");
+  throw Error("The first command line argument 'articlesGHUrl'(='https://api.github.com/repos/<USERNAME>/<REPOSITORY_NAME>/contents/<REPOSITORY_PATH>?ref=<BRANCH_NAME>') is required.");
 }
 const outputFname: string = process.argv[4];
 if (outputFname == null || outputFname.length === 0) {
@@ -48,6 +48,10 @@ Promise.all([getContents(articlesGHUrl)])
       .then(async res => {
         const articles: Array<{
           fname: string;
+          article_id: {
+            year: number;
+            id: number;
+          };
           fpath: string;
           fsize: number;
           gh_url: string;
@@ -59,6 +63,10 @@ Promise.all([getContents(articlesGHUrl)])
         res.forEach(resArticle => {
           articles.push({
             fname: resArticle.data.name,
+            article_id: {
+              year: parseInt(resArticle.data.name.slice(0, 4)),
+              id: parseInt(resArticle.data.name.slice(4, 7)),
+            },
             fpath: resArticle.data.path,
             fsize: resArticle.data.size,
             gh_url: resArticle.data.url,
@@ -71,6 +79,10 @@ Promise.all([getContents(articlesGHUrl)])
         // console.log(articles);
         const tblArticles: Array<{
           fname: string;
+          article_id: {
+            year: number;
+            id: number;
+          };
           fpath: string;
           fsize: number;
           gh_url: string;
@@ -90,6 +102,7 @@ Promise.all([getContents(articlesGHUrl)])
         articles.forEach(article => {
           tblArticles.push({
             fname: article.fname,
+            article_id: article.article_id,
             fpath: article.fpath,
             fsize: article.fsize,
             gh_url: article.gh_url,
