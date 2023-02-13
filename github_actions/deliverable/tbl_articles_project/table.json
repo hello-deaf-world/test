@@ -1,6 +1,10 @@
 [
   {
     "fname": "2022001_sample.yml",
+    "article_id": {
+      "year": 2022,
+      "id": 1
+    },
     "fpath": "articles_project/2022001_sample.yml",
     "fsize": 2565,
     "gh_url": "https://api.github.com/repos/hello-deaf-world/test/contents/articles_project/2022001_sample.yml?ref=main",
@@ -22,6 +26,10 @@
   },
   {
     "fname": "2022002_sample.yml",
+    "article_id": {
+      "year": 2022,
+      "id": 2
+    },
     "fpath": "articles_project/2022002_sample.yml",
     "fsize": 1619,
     "gh_url": "https://api.github.com/repos/hello-deaf-world/test/contents/articles_project/2022002_sample.yml?ref=main",
